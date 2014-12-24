@@ -12,8 +12,6 @@ def main():
 
 	while True:
 		usrsearch = input('Search for music: ')
-		if usrsearch[1:] == '-' | usrsearch[2:] == '--':
-			options(usrsearch)
 
 		for (db, dbfunc) in dbs:
 			try:
