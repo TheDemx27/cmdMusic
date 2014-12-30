@@ -8,7 +8,7 @@ You can add new sites to scrape by adding a function in databases.py that return
 Example Output:
 ```
 Search for music: ratatat loud pipes
-100.1% 6610944 / 6605440
+100.0% 6605440 / 6605440
 Ratatat - Loud Pipes
 
 Search for music:
