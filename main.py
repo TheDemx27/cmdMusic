@@ -1,47 +1,66 @@
 from robobrowser import RoboBrowser
 from urllib.request import urlretrieve, Request
 from urllib.error import HTTPError, URLError
-import databases, sys, os
+import databases, sys, os, pygame
 
 def main():
 	clear()
 
 	browser = RoboBrowser(history=False)
-	dbs = [('http://soundowl.com/', databases.soundowl), ('http://mp3skull.com/', databases.mp3skull)]
+
+	dbs = [
+	('http://grooveshark.com/#!/', databases.grooveshark),
+	('http://soundowl.com/', databases.soundowl),
+	('http://mp3skull.com/', databases.mp3skull)
+	]
+
 	path = 'C:/Users/Demx/Desktop/%s.mp3'
 
 	while True:
-		usrsearch = input('Search for music: ')
+		usrInput = input('Search for music: ')
+		usrSearches = usrInput.split("&")
+		for usrSearch in usrSearches:
+			request(browser, dbs, path, usrSearch)
 
-		for (db, dbfunc) in dbs:
-			try:
-				link, songname = dbfunc(db, usrsearch, browser)
-				urlretrieve(str(link), path % (songname), reporthook)
-				print(songname)
-				sys.stderr.write('\n')
-				break
-			except (HTTPError, AttributeError, URLError):
-				pass
-		
-		# TODO: Make better 'No results...' 
+def request(browser, dbs, path, usrSearch):
+	songName = None
+	usrSelect = True
+	songNum = 0
 
-		if songname == 'nosong':
-			print('No results...\n')
+	for (db, dbfunc) in dbs:
+		try:
+			while usrSelect = True
+				pressed = pygame.key.get_pressed()
+				link, songName = dbfunc(usrSearch, db, browser, songNum)
+				print(songName)
+				if pygame.K_UP in pressed:
+					songNum++
+				if pygame.K_DOWN in pressed:
+					songNum--
+				if (pygame.K_RETURN):
+					break
 
-def reporthook(blocknum, blocksize, totalsize):
-	readsofar = blocknum * blocksize
-	if totalsize > 0:
-		percent = readsofar * 1e2 / totalsize
+			urlretrieve(str(link), path % (songName), reporthook)
+			sys.stderr.write('\n')
+			break
+		except (KeyboardInterrupt), AttributeError, HTTPError, URLError):
+			pass
 
+	if songName == None:
+		print('No results...\n')
+
+def reporthook(blockNum, blockSize, totalSize):
+	readSoFar = blockNum * blockSize
+
+	if totalSize > 0:
+		percent = readSoFar * 1e2 / totalSize
 		percent = 100 if percent > 100 else percent
-		readsofar = totalsize if readsofar > totalsize else readsofar
- 
-		sys.stderr.write('\r%5.1f%% %*d / %d' % (percent, len(str(totalsize)), readsofar, totalsize))
-
-		if readsofar >= totalsize:
+		readSoFar = totalSize if readSoFar > totalSize else readSoFar
+		sys.stderr.write('\r%5.1f%% %*d / %d' % (percent, len(str(totalSize)), readSoFar, totalSize))
+		if readSoFar >= totalSize:
 			sys.stderr.write('\n')
 	else:
-		sys.stderr.write('\r100.0%% %d / %d\n' % (readsofar, totalsize))
+		sys.stderr.write('\r100.0%% %d / %d\n' % (readSoFar, totalSize))
 
 def clear():
 	os.system('cls' if os.name == 'nt' else 'clear')
