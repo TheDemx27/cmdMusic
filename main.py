@@ -37,7 +37,7 @@ def request(browser, dbs, path, usrSearch):
 					songNum++
 				if pygame.K_DOWN in pressed:
 					songNum--
-				if (pygame.K_RETURN):
+				if pygame.K_RETURN:
 					break
 
 			urlretrieve(str(link), path % (songName), reporthook)
