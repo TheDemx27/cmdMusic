@@ -1,7 +1,7 @@
 from robobrowser import RoboBrowser
 from urllib.request import urlretrieve, Request
 from urllib.error import HTTPError, URLError
-import databases, sys, os, pygame
+import databases, sys, pygame, os
 
 def main():
 	clear()
@@ -29,21 +29,21 @@ def request(browser, dbs, path, usrSearch):
 
 	for (db, dbfunc) in dbs:
 		try:
-			while usrSelect = True
+			while usrSelect == True:
 				pressed = pygame.key.get_pressed()
 				link, songName = dbfunc(usrSearch, db, browser, songNum)
 				print(songName)
 				if pygame.K_UP in pressed:
-					songNum++
+					songNum+=1
 				if pygame.K_DOWN in pressed:
-					songNum--
+					songNum-=1
 				if pygame.K_RETURN:
 					break
 
 			urlretrieve(str(link), path % (songName), reporthook)
 			sys.stderr.write('\n')
 			break
-		except (KeyboardInterrupt), AttributeError, HTTPError, URLError):
+		except (KeyboardInterrupt, AttributeError, HTTPError, URLError):
 			pass
 
 	if songName == None:
